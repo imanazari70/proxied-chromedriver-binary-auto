@@ -48,9 +48,10 @@ def get_chromedriver_url(version):
     :param version: chromedriver version string
     :return: Download URL for chromedriver
     """
-    base_url = 'https://chromedriver.storage.googleapis.com/' if os.getenv('BASE_URL') is None else os.getenv('BASE_URL')
-    # Environment variable BASE_URL could be: https://github.com/norouzzadegan/chromedriver-releases/releases/download
-
+    base_url = os.getenv('CHROMEDRIVER_DOWNLOAD_BASE_URL', 'https://chromedriver.storage.googleapis.com/')
+    # Environment variable BASE_URL could be: https://github.com/norouzzadegan/chromedriver-releases/releases/download/
+    if not base_url.endswith('/'):
+        base_url += '/'
     if sys.platform.startswith('linux') and sys.maxsize > 2 ** 32:
         platform = 'linux'
         architecture = '64'
@@ -120,8 +121,11 @@ def get_latest_release_for_version(version=None):
     :param version: Major version number or None
     :return: Latest release for given version
     """
-    release_url = 'https://chromedriver.storage.googleapis.com/LATEST_RELEASE' if os.getenv('RELEASE_URL') is None else os.getenv('RELEASE_URL')
-    # Environment variable RELEASE_URL could be: https://github.com/norouzzadegan/chromedriver-releases/releases/download/latest/LATEST_RELEASE
+    release_url = os.getenv('CHROMEDRIVER_LATEST_RELEASE_BASE_URL', 'https://chromedriver.storage.googleapis.com/')
+    # Environment variable RELEASE_URL could be: https://github.com/norouzzadegan/chromedriver-releases/releases/download/latest/
+    if not base_url.endswith('/'):
+        base_url += '/'
+    release_url += 'LATEST_RELEASE'
     if version:
         release_url += '_{}'.format(version)
     try:
