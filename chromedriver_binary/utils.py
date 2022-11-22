@@ -123,8 +123,8 @@ def get_latest_release_for_version(version=None):
     """
     release_url = os.getenv('CHROMEDRIVER_LATEST_RELEASE_BASE_URL', 'https://chromedriver.storage.googleapis.com/')
     # Environment variable CHROMEDRIVER_LATEST_RELEASE_BASE_URL could be: https://github.com/norouzzadegan/chromedriver-releases/releases/download/latest/
-    if not base_url.endswith('/'):
-        base_url += '/'
+    if not release_url.endswith('/'):
+        release_url += '/'
     release_url += 'LATEST_RELEASE'
     if version:
         release_url += '_{}'.format(version)
